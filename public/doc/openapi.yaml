@@ -1,0 +1,344 @@
+openapi: 3.0.3
+info:
+  title: Tic Tac Toe
+  version: '1.0'
+  description: API to Play the Tic-Tac-Toe game
+  summary: Tic Tac Toe
+  contact:
+    name: Riccardo Fiorenza
+    email: ricfio.professional@gmail.com
+servers:
+  - url: 'http://localhost:8000'
+paths:
+  /api/v1/games:
+    post:
+      summary: Start a New Game
+      operationId: post-startGame
+      responses:
+        '200':
+          description: Game Started
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  token:
+                    type: string
+                    minLength: 1
+                required:
+                  - token
+                x-examples:
+                  example-1:
+                    token: 65d86e1b039095e296b7616c02ded8d5
+              examples:
+                New Token:
+                  value:
+                    token: 6a85276f62aeeaa5d117264dd9caf6e6
+        '400':
+          description: Bad Request
+        '503':
+          description: Service Unavailable
+      description: Start a new game.
+      parameters: []
+      tags:
+        - games
+    parameters: []
+  '/api/v1/games/{token}':
+    parameters:
+      - schema:
+          type: string
+        name: token
+        in: path
+        required: true
+    get:
+      summary: Resume a Pending Game
+      tags:
+        - games
+      responses:
+        '200':
+          description: Game Found
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  token:
+                    type: string
+                    minLength: 1
+                  board:
+                    type: array
+                    items:
+                      required: []
+                      properties: {}
+                  turn:
+                    type: number
+                  winner:
+                    type: number
+                  status:
+                    type: number
+                required:
+                  - token
+                  - board
+                  - turn
+                  - winner
+                  - status
+                x-examples:
+                  example-1:
+                    token: 6a85276f62aeeaa5d117264dd9caf6e6
+                    board:
+                      - 2
+                      - 1
+                      - 0
+                      - 0
+                      - 2
+                      - 1
+                      - 1
+                      - 2
+                      - 0
+                    turn: 1
+                    winner: -1
+                    status: 0
+              examples:
+                Game:
+                  value:
+                    token: 6a85276f62aeeaa5d117264dd9caf6e6
+                    board:
+                      - 2
+                      - 1
+                      - 0
+                      - 0
+                      - 2
+                      - 1
+                      - 1
+                      - 2
+                      - 0
+                    turn: 1
+                    winner: -1
+                    status: 0
+        '400':
+          description: Bad Request
+        '404':
+          description: Game Not Found
+      operationId: get-resumeGame
+      description: Retrieve the data of the game state by the token to resume a pending game.
+  '/api/v1/games/{token}/makeMove':
+    parameters:
+      - schema:
+          type: string
+        name: token
+        in: path
+        required: true
+    patch:
+      summary: Make a Player's Move
+      operationId: patch-makeMove
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  token:
+                    type: string
+                    minLength: 1
+                  board:
+                    type: array
+                    items:
+                      required: []
+                      properties: {}
+                  turn:
+                    type: number
+                  winner:
+                    type: number
+                  status:
+                    type: number
+                required:
+                  - token
+                  - board
+                  - turn
+                  - winner
+                  - status
+                x-examples:
+                  example-1:
+                    token: ef8abad5e3dd7f2f927b5361c854de99
+                    board:
+                      - 2
+                      - 2
+                      - 1
+                      - 2
+                      - 1
+                      - 1
+                      - 1
+                      - 0
+                      - 0
+                    turn: 2
+                    winner: -1
+                    status: 0
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                turn:
+                  type: number
+                cell:
+                  type: number
+              required:
+                - turn
+                - cell
+              x-examples:
+                example-1:
+                  turn: 1
+                  cell: 0
+            examples:
+              example-1:
+                value:
+                  turn: 0
+                  cell: 0
+      description: Make a player's move by marking a cell with the symbol correponding to the player.
+      tags:
+        - games
+  '/api/v1/games/{token}/autoMove':
+    parameters:
+      - schema:
+          type: string
+        name: token
+        in: path
+        required: true
+    patch:
+      summary: Make an Automatic Random Move
+      operationId: patch-autoMove
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    token: ef8abad5e3dd7f2f927b5361c854de99
+                    board:
+                      - 2
+                      - 2
+                      - 1
+                      - 2
+                      - 1
+                      - 1
+                      - 1
+                      - 0
+                      - 0
+                    turn: 2
+                    winner: -1
+                    status: 0
+                properties:
+                  token:
+                    type: string
+                    minLength: 1
+                    description: token that identify the game
+                  board:
+                    type: array
+                    description: 'current marks in the cells of the game board, mapped as: 0 => NONE, 1 => ''X'', 2 => ''Y'''
+                    items:
+                      type: object
+                      additionalProperties: false
+                  turn:
+                    type: number
+                    description: 'player that should make the next move, mapped as: 1 => PLAYER1, 2 => PLAYER2'
+                  winner:
+                    type: number
+                    description: 'winner of the game, mapped as: -1 => NONE, 0 => DRAW, 1 => PLAYER1, 2 => PLAYER2'
+                  status:
+                    type: number
+                    description: 'game status, mapped as: 0 => pending, 1 => completed'
+                required:
+                  - token
+                  - board
+                  - turn
+                  - winner
+                  - status
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+      description: Make an automatic random move based on the current game state.
+      tags:
+        - games
+components:
+  schemas:
+    Game:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          token: 6a85276f62aeeaa5d117264dd9caf6e6
+          board:
+            - 2
+            - 1
+            - 0
+            - 0
+            - 2
+            - 1
+            - 1
+            - 2
+            - 0
+          turn: 1
+          winner: -1
+          status: 0
+      examples:
+        - token: 6a85276f62aeeaa5d117264dd9caf6e6
+          board:
+            - 2
+            - 1
+            - 0
+            - 0
+            - 2
+            - 1
+            - 1
+            - 2
+            - 0
+          turn: 1
+          winner: -1
+          status: 0
+      properties:
+        token:
+          type: string
+          minLength: 32
+          description: Unique identifier for the given game.
+          maxLength: 32
+        board:
+          type: array
+          items:
+            type: object
+            minProperties: 9
+            maxProperties: 9
+        turn:
+          type: number
+        winner:
+          type: number
+        status:
+          type: number
+          description: Game status for the game.
+      required:
+        - token
+        - board
+        - turn
+        - winner
+        - status
+      x-tags:
+        - games
+  securitySchemes: {}
+  examples: {}
+tags:
+  - name: games

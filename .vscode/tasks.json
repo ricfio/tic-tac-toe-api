@@ -1,0 +1,39 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "server:start",
+            "type": "shell",
+            "command": "symfony server:start",
+            "problemMatcher": []
+        },
+        {
+            "label": "phpunit",
+            "type": "shell",
+            "command": "bin/phpunit --testdox",
+            "problemMatcher": [
+                "$phpunit"
+            ]
+        },
+        {
+            "label": "cache:clear",
+            "type": "shell",
+            "command": "bin/console debug:route",
+            "problemMatcher": []
+        },
+        {
+            "label": "debug:route",
+            "type": "shell",
+            "command": "bin/console cache:clear",
+            "problemMatcher": []
+        },
+        {
+            "label": "dump-autoload",
+            "type": "shell",
+            "command": "composer dump-autoload",
+            "problemMatcher": []
+        }
+    ]
+}
