@@ -33,11 +33,18 @@ The main dependencies of this project are the followings:
 
 ## Getting started
 
-Use the following commands to build and up the docker environment:  
+Use the following commands to build and up the docker environment, and loggin in the app docker container:  
 
 ```bash
 docker-compose build --no-cache
 docker-compose up -d
+docker-compose exec php bash
+```
+
+Now, from app docker container, install the dependencies:
+
+```bash
+composer install
 ```
 
 Now, you can request on your browser the app homepage and other resources:
@@ -45,12 +52,6 @@ Now, you can request on your browser the app homepage and other resources:
 - [Homepage](http://localhost:8000/)
 - [Open API Documentation](http://localhost:8000/doc/index.html)
 - [API baseurl](http://localhost:8000/api/v1)
-
-You can also loggin inside the app container:
-
-```bash
-docker-compose exec php bash
-```
 
 ## Useful commands
 
