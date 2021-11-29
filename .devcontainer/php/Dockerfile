@@ -6,39 +6,27 @@ FROM php:${PHP_VERSION}-fpm-alpine AS base
 WORKDIR /app
 
 ## Install composer
-RUN wget https://getcomposer.org/installer && \
-    php installer --install-dir=/usr/local/bin/ --filename=composer && \
-    rm installer
+RUN wget https://getcomposer.org/installer \
+    && php installer --install-dir=/usr/local/bin/ --filename=composer \
+    && rm installer
 
 ## Install symfony CLI
-#RUN wget https://get.symfony.com/cli/installer -O - | bash && \
-#    mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+# RUN wget https://get.symfony.com/cli/installer -O - | bash \
+#     && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 
 ## Install php extensions
-#RUN docker-php-ext-install pdo_mysql
+# RUN docker-php-ext-install pdo_mysql
 
 ## DEV image
 FROM base AS dev
 
 ## Install extra packages
-RUN apk add bash make git
+RUN apk --no-cache add bash make git
 
-## Install php extensions
-# RUN docker-php-ext-install pdo_mysql
-
-## Install Xdebug
-# ARG XDEBUG_MODE=off
-# ARG XDEBUG_CLIENT_PORT=9003
-# ARG XDEBUG_CLIENT_HOST=host.docker.internal
-# COPY conf.d/docker-php-ext-xdebug.ini.template /usr/local/etc/php/conf.d/
-# RUN apk --no-cache add $PHPIZE_DEPS && \
-#     pecl install xdebug && \
-#     docker-php-ext-enable xdebug && \
-#     export XDEBUG_MODE=$XDEBUG_MODE && \
-#     export XDEBUG_CLIENT_PORT=$XDEBUG_CLIENT_PORT && \
-#     export XDEBUG_CLIENT_HOST=$XDEBUG_CLIENT_HOST && \
-#     envsubst < /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini.template > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-#     rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini.template
+## Install php xdebug
+RUN apk --no-cache add $PHPIZE_DEPS \
+    && pecl install xdebug-3.1.1 \
+    && docker-php-ext-enable xdebug
 
 ## Use the default development configuration
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
