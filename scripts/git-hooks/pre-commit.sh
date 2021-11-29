@@ -39,7 +39,7 @@ function run_check()
 
 print_section "Coding Standard"
 run_check "PHP CS Fixer" make php-cs-fixer
-#run_check "PHP Mess Detector" make phpmd
+run_check "PHP Mess Detector" make phpmd
 
 print_section "Static Analysis"
 run_check "Psalm       " make psalm
