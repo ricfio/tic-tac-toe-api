@@ -44,7 +44,7 @@ run_check "PHP Mess Detector" make phpmd
 print_section "Static Analysis"
 run_check "Psalm       " make psalm
 #run_check "PHPStan     " make phpstan
-#run_check "PHPArkitect " make phparkitect
+run_check "PHPArkitect " make phparkitect
 
 print_section "Test Execution"
 run_check "PHPUnit     " make test
