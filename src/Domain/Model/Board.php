@@ -96,7 +96,7 @@ class Board implements JsonSerializable, JsonUnserializable
 
     public function hasCellUnmarked(int $cell): bool
     {
-        return 0 === $this->marks[$cell];
+        return CellMark::NONE === $this->marks[$cell];
     }
 
     public function setCellMarked(int $cell, int $mark): void
