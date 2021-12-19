@@ -7,7 +7,7 @@ namespace App;
 use App\Application\Repository\GameRepositoryInterface;
 use App\Application\Service\GameEngine;
 use App\Application\Service\GameService;
-use App\Infrastructure\Adapter\Repository\GameRepositoryFolder;
+use App\Infrastructure\Adapter\Repository\GameRepositoryRedis;
 use DI\Container;
 use Psr\Container\ContainerInterface;
 
@@ -15,9 +15,8 @@ class ContainerFactory
 {
     public static function create(): ContainerInterface
     {
-        // $storagePath = __DIR__.'/../temp';
-        $storagePath = '/tmp/tic-tac-toe-api';
-        $gameRepository = new GameRepositoryFolder($storagePath);
+        $gameRepository = self::createGameRepositoryRedis();
+
         $gameEngine = new GameEngine();
         $gameService = new GameService($gameRepository, $gameEngine);
 
@@ -27,5 +26,22 @@ class ContainerFactory
         $container->set(GameService::class, fn () => $gameService);
 
         return $container;
+    }
+
+    // private static function createGameRepositoryFolder(): GameRepositoryFolder
+    // {
+    //     // $storagePath = __DIR__.'/../temp';
+    //     $storagePath = '/tmp/tic-tac-toe-api';
+    //     $gameRepository = new GameRepositoryFolder($storagePath);
+
+    //     return $gameRepository;
+    // }
+
+    private static function createGameRepositoryRedis(): GameRepositoryRedis
+    {
+        $host = 'redis';
+        $gameRepository = new GameRepositoryRedis($host);
+
+        return $gameRepository;
     }
 }

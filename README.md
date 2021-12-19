@@ -33,7 +33,7 @@ The main dependencies of this project are the followings:
 
 ## Getting started
 
-Use the following commands to build and up the docker environment, and loggin in the app docker container:  
+Use the following commands to build and up the docker environment, and login the app docker container:  
 
 ```bash
 docker-compose build --no-cache
@@ -215,7 +215,7 @@ curl --request PATCH --header 'Content-Type: application/json' --url http://loca
 - [ ] `GitHub/CI`: Add .github/workflows/ci.yml for continuous integration
 - [ ] `settings`: Create a setting file with the main app parameters ($storagePath in ContainerFactory.php, etc.)
 - [ ] `API::startGame/game`: The json response could be the same of other methods (replacing current response)
-- [ ] `GameRepositoryRedis`: Implement GameRepositoryRedis (implements GameRepositoryInterface)
+- [X] `GameRepositoryRedis`: Implement GameRepositoryRedis (implements GameRepositoryInterface)
 - [ ] `HTTP/Code`: Improve the HTTP error codes mapping used in the response when an exception is thrown
 - [ ] `openapi.yaml`: Improve the openapi.yaml with more detailed structures and examples
 - [ ] `api-client-cli`: Implement a basic API Client CLI (Command Line Interface) to demo/test purpose

@@ -21,11 +21,14 @@ RUN wget https://getcomposer.org/installer \
 FROM base AS dev
 
 ## Install extra packages
-RUN apk --no-cache add bash make git
+RUN apk --no-cache add bash make git $PHPIZE_DEPS
 
-## Install php xdebug
-RUN apk --no-cache add $PHPIZE_DEPS \
-    && pecl install xdebug-3.1.1 \
+## Install php-redis
+RUN pecl install redis \
+    && docker-php-ext-enable redis
+
+## Install php-xdebug
+RUN pecl install xdebug-3.1.1 \
     && docker-php-ext-enable xdebug
 
 ## Use the default development configuration
