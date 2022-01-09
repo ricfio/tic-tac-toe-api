@@ -2262,16 +2262,16 @@
         },
         {
             "name": "phparkitect/phparkitect",
-            "version": "0.2.7",
+            "version": "0.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phparkitect/arkitect.git",
-                "reference": "e40433a7daa46edb6a673162cdf07ca56ad21ea9"
+                "reference": "a6720308b63d3cdd84ae9fcd7c10ef7406092ee4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phparkitect/arkitect/zipball/e40433a7daa46edb6a673162cdf07ca56ad21ea9",
-                "reference": "e40433a7daa46edb6a673162cdf07ca56ad21ea9",
+                "url": "https://api.github.com/repos/phparkitect/arkitect/zipball/a6720308b63d3cdd84ae9fcd7c10ef7406092ee4",
+                "reference": "a6720308b63d3cdd84ae9fcd7c10ef7406092ee4",
                 "shasum": ""
             },
             "require": {
@@ -2326,9 +2326,9 @@
             "description": "Enforce architectural constraints in your PHP applications",
             "support": {
                 "issues": "https://github.com/phparkitect/arkitect/issues",
-                "source": "https://github.com/phparkitect/arkitect/tree/0.2.7"
+                "source": "https://github.com/phparkitect/arkitect/tree/0.2.10"
             },
-            "time": "2021-12-08T15:36:11+00:00"
+            "time": "2022-01-07T21:29:25+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
